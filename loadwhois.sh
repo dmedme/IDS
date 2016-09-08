@@ -50,32 +50,6 @@ role_abbr text not null,
 email text null
 );
 EOF
-#
-# Create a database to hold the mail history
-#
-rm -f mailhist.db
-sqlite3 mailhist.db << EOF
-create table mailhist (
-timestamp integer not null,
-ip text not null,
-revdns text null,
-host text null,
-whois text null,
-refer text null
-);
-create table consolhist (
-timestamp integer not null,
-ip text not null,
-dport integer not null,
-min_sess_start not null,
-max_sess_start not null,
-seen integer not null,
-ct double not null,
-pout integer not null,
-pin integer not null,
-bout integer not null,
-bin integer not null);
-EOF
 return
 }
 load_hosts() {
@@ -416,28 +390,6 @@ EOF
 /home/e2soft/e2common/ascbin -a -s"|" 2I4 3S <country.lis >country.bin
     return
 }
-# *******************************************************
-# Function to produce the .bin files used by genconv
-# VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-new_whois() {
-for i in `echo $* | sed 's/+/ /g'`
-do
-    echo IP:$i
-    dig -x $i +short
-    echo IP:$i
-#    torsocks whois $i 2>failed.lis
-    whois $i 2>failed.lis
-    if grep Timeout failed.lis >/dev/null 2>&1
-    then
-        for j in whois.afrinic.net whois.apnic.net whois.lacnic.net whois.arin.net whois.ripe.net
-        do
-#            torsocks whois -h $j $i
-             whois -h $j $i
-        done
-    fi
-done >new_whois.lis
-    return
-}
 # ******************************************************
 # Main program starts here
 # VVVVVVVVVVVVVVVVVVVVVVVV
@@ -445,6 +397,5 @@ done >new_whois.lis
 #load_hosts
 #load_geoip
 #sqlite3 whois.db <verio+fpg.sql 
-#load_whois alerts/alertwhois.lis
-#prepare_bins
-
+load_whois alerts/alertwhois.lis
+prepare_bins
