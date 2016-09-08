@@ -1,0 +1,31 @@
+body {
+    background-color: #40f5a0;
+}
+.BASE {
+    background-color: #50ffc0;
+}
+.submit {
+cursor: pointer;
+cursor: hand;
+border: 2px #008000 outset;
+color: black;
+background-color: #80ff80;
+height: 28px;
+float: left;
+text-indent: 4px;
+text-decoration:none;
+font-weight: bold;
+}
+.submit:visited{
+color: black;
+}
+
+.submit:hover{
+border-style: inset;
+background-color: white;
+padding: 2px 3px 0 5px; /*shift text 1px to the right and down*/
+}
+
+.submit:active{
+color: #ff0000;
+}

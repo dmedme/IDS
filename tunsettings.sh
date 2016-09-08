@@ -1,0 +1,5 @@
+PROXY_DOMAIN=wherever
+PROXY_USER=netperf
+PROXY_PASSWORD=Wh4t3v3r!
+USER=hacktest
+PASSWORD=B4dguy5s!0
